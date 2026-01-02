@@ -1,6 +1,6 @@
 import { Radio, Typography } from "antd";
-import { useContext } from "react";
-import TodoContext from "../../todoContext";
+import { useShallow } from "zustand/react/shallow";
+import useTodoStore from "../../store/todo-store";
 
 const Title = Typography.Title;
 
@@ -13,7 +13,12 @@ export const FILTERS = {
 export type FiltersValueType = (typeof FILTERS)[keyof typeof FILTERS];
 
 const Filter: React.FC = () => {
-    const { filter, setFilter } = useContext(TodoContext);
+    const { filter, setFilter } = useTodoStore(
+        useShallow((state) => ({
+            filter: state.filter,
+            setFilter: state.setFilter,
+        }))
+    );
 
     const filterTextList = Object.keys(FILTERS) as Array<keyof typeof FILTERS>;
     return (

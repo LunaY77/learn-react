@@ -1,11 +1,10 @@
 import { Typography } from "antd";
-import { useContext } from "react";
-import TodoContext from "../../todoContext";
+import useTodoStore from "../../store/todo-store";
 
 const Title = Typography.Title;
 
 const RemainingTodo: React.FC = () => {
-    const { todos } = useContext(TodoContext);
+    const todos = useTodoStore((state) => state.todos);
 
     const count = todos.reduce((acc, prev) => {
         return prev.completed ? acc : acc + 1;

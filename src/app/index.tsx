@@ -1,15 +1,14 @@
 import { Typography } from "antd";
-import Footer, { FILTERS } from "./components/footer";
+import Footer from "./components/footer";
 import Header from "./components/header";
 import TodoList from "./components/todos/list";
 
 import defaultTodoData from "./data";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "../global.less";
-import type { FiltersValueType } from "./components/footer/filter";
 import type { TodoItem } from "./components/todos/item";
-import TodoContext from "./todoContext";
+import useTodoStore from "./store/todo-store";
 
 const Title = Typography.Title;
 
@@ -22,30 +21,20 @@ function getTodoData(): Promise<TodoItem[]> {
 }
 
 export default function App() {
-    const [filter, setFilter] = useState<FiltersValueType>(FILTERS.All);
-    const [todos, setTodos] = useState<TodoItem[]>();
+    const initTodos = useTodoStore((state) => state.initTodos);
 
     useEffect(() => {
-        getTodoData().then(setTodos);
-    }, []);
+        getTodoData().then(initTodos);
+    }, [initTodos]);
 
     return (
-        <TodoContext.Provider
-            value={{
-                filter,
-                setFilter,
-                todos: todos || [],
-                setTodos: setTodos,
-            }}
-        >
-            <div className="todo-container">
-                <Title level={2}>Todos</Title>
-                <div className="todo">
-                    <Header />
-                    <TodoList />
-                    <Footer />
-                </div>
+        <div className="todo-container">
+            <Title level={2}>Todos</Title>
+            <div className="todo">
+                <Header />
+                <TodoList />
+                <Footer />
             </div>
-        </TodoContext.Provider>
+        </div>
     );
 }

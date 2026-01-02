@@ -1,11 +1,16 @@
-import { useContext } from "react";
-import TodoContext from "../../todoContext";
+import { useShallow } from "zustand/react/shallow";
+import useTodoStore from "../../store/todo-store";
 import { FILTERS } from "../footer";
 import TodoItem from "./item";
 import "./list.less";
 
 const TodoList: React.FC = () => {
-    const { todos, filter } = useContext(TodoContext);
+    const { todos, filter } = useTodoStore(
+        useShallow((state) => ({
+            todos: state.todos,
+            filter: state.filter,
+        }))
+    );
 
     const visibleTodos = todos.filter((todo) => {
         switch (filter) {
