@@ -1,12 +1,16 @@
 import { Typography } from "antd";
+import { useContext } from "react";
+import TodoContext from "../../todoContext";
 
 const Title = Typography.Title;
 
-type RemainingTodoProps = {
-    count: number;
-};
+const RemainingTodo: React.FC = () => {
+    const { todos } = useContext(TodoContext);
 
-const RemainingTodo: React.FC<RemainingTodoProps> = ({ count }) => {
+    const count = todos.reduce((acc, prev) => {
+        return prev.completed ? acc : acc + 1;
+    }, 0);
+
     const suffix = count === 1 ? "" : "s";
 
     return (

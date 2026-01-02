@@ -1,6 +1,6 @@
-import { type TodoItemProps } from './components/todos/item';
+import { type TodoItem } from './components/todos/item';
 
-const data: TodoItemProps[] = [
+const data: TodoItem[] = [
   {
     id: 1,
     text: 'first thing',

@@ -1,15 +1,27 @@
-import TodoItem, { type TodoItemProps } from "./item";
+import { useContext } from "react";
+import TodoContext from "../../todoContext";
+import { FILTERS } from "../footer";
+import TodoItem from "./item";
 import "./list.less";
 
-type TodoListProps = {
-    data: TodoItemProps[];
-};
+const TodoList: React.FC = () => {
+    const { todos, filter } = useContext(TodoContext);
 
-const TodoList: React.FC<TodoListProps> = ({ data }) => {
+    const visibleTodos = todos.filter((todo) => {
+        switch (filter) {
+            case FILTERS.Active:
+                return todo.completed === false;
+            case FILTERS.Completed:
+                return todo.completed === true;
+            default:
+                return true;
+        }
+    });
+
     return (
         <ul className="todo-list">
-            {data.map(({ id, text, completed }) => (
-                <TodoItem key={id} text={text} completed={completed} />
+            {visibleTodos.map((todo) => (
+                <TodoItem key={todo.id} data={todo} />
             ))}
         </ul>
     );

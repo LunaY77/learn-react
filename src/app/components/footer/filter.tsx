@@ -1,4 +1,6 @@
 import { Radio, Typography } from "antd";
+import { useContext } from "react";
+import TodoContext from "../../todoContext";
 
 const Title = Typography.Title;
 
@@ -10,16 +12,18 @@ export const FILTERS = {
 
 export type FiltersValueType = (typeof FILTERS)[keyof typeof FILTERS];
 
-type FilterProps = {
-    filter: FiltersValueType;
-};
+const Filter: React.FC = () => {
+    const { filter, setFilter } = useContext(TodoContext);
 
-const Filter: React.FC<FilterProps> = ({ filter }) => {
     const filterTextList = Object.keys(FILTERS) as Array<keyof typeof FILTERS>;
     return (
         <div className="filters status-filters">
             <Title level={5}>Filter by Status</Title>
-            <Radio.Group defaultValue={filter} size="small">
+            <Radio.Group
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                size="small"
+            >
                 {filterTextList.map((text) => {
                     const val = FILTERS[text];
                     return (

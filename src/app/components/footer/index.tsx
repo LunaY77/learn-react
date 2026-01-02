@@ -1,17 +1,11 @@
 import { Col, Row } from "antd";
 import Actions from "./actions";
-import type { FiltersValueType } from "./filter";
 import Filter from "./filter";
 import RemainingTodos from "./remain";
 
 import "./index.less";
 
-type FooterProps = {
-    todosRemaining: number;
-    filter: FiltersValueType;
-};
-
-const Footer: React.FC<FooterProps> = ({ todosRemaining, filter }) => {
+const Footer: React.FC = () => {
     return (
         <footer className="todo-footer">
             <Row>
@@ -19,10 +13,10 @@ const Footer: React.FC<FooterProps> = ({ todosRemaining, filter }) => {
                     <Actions />
                 </Col>
                 <Col span={8}>
-                    <RemainingTodos count={todosRemaining} />
+                    <RemainingTodos />
                 </Col>
                 <Col span={8}>
-                    <Filter filter={filter} />
+                    <Filter />
                 </Col>
             </Row>
         </footer>
