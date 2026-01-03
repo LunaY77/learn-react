@@ -1,16 +1,11 @@
 import { Button, Typography } from "antd";
-import { useShallow } from "zustand/react/shallow";
-import useTodoStore from "../../store/todo-store";
+import { useClearCompleted, useMarkAllCompleted } from "../../hooks/use-todos";
 
 const Title = Typography.Title;
 
 const FooterActions: React.FC = () => {
-    const { markAllCompleted, clearCompleted } = useTodoStore(
-        useShallow((state) => ({
-            markAllCompleted: state.markAllCompleted,
-            clearCompleted: state.clearCompleted,
-        }))
-    );
+    const clearCompletedMutation = useClearCompleted();
+    const markAllCompletedMutation = useMarkAllCompleted();
 
     return (
         <>
@@ -18,14 +13,14 @@ const FooterActions: React.FC = () => {
             <Button
                 className="btn-action"
                 size="small"
-                onClick={markAllCompleted}
+                onClick={() => markAllCompletedMutation.mutate()}
             >
                 Mark All as Completed
             </Button>
             <Button
                 className="btn-action"
                 size="small"
-                onClick={clearCompleted}
+                onClick={() => clearCompletedMutation.mutate()}
             >
                 Clear Completed
             </Button>

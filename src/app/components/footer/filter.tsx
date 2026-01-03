@@ -1,16 +1,9 @@
 import { Radio, Typography } from "antd";
 import { useShallow } from "zustand/react/shallow";
 import useTodoStore from "../../store/todo-store";
+import { FILTERS } from "./filter-constants";
 
 const Title = Typography.Title;
-
-export const FILTERS = {
-    All: "all",
-    Active: "active",
-    Completed: "completed",
-} as const;
-
-export type FiltersValueType = (typeof FILTERS)[keyof typeof FILTERS];
 
 const Filter: React.FC = () => {
     const { filter, setFilter } = useTodoStore(

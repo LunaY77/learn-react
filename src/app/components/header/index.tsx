@@ -1,11 +1,10 @@
 import { Input } from "antd";
 import { useState } from "react";
-import useTodoStore from "../../store/todo-store";
+import { useAddTodo } from "../../hooks/use-todos";
 
 const Header: React.FC = () => {
     const [input, setInput] = useState("");
-
-    const addTodo = useTodoStore((state) => state.addTodo);
+    const addTodoMutation = useAddTodo();
 
     return (
         <Input
@@ -17,7 +16,7 @@ const Header: React.FC = () => {
             }}
             onKeyDown={(ev) => {
                 if (ev.key === "Enter" && input !== "") {
-                    addTodo(input);
+                    addTodoMutation.mutate(input);
                     setInput("");
                 }
             }}

@@ -1,4 +1,4 @@
-import { type TodoItem } from './components/todos/item';
+import { type TodoItem } from '../components/todos/item';
 
 const data: TodoItem[] = [
   {

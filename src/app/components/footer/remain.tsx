@@ -1,10 +1,10 @@
 import { Typography } from "antd";
-import useTodoStore from "../../store/todo-store";
+import { useTodos } from "../../hooks/use-todos";
 
 const Title = Typography.Title;
 
 const RemainingTodo: React.FC = () => {
-    const todos = useTodoStore((state) => state.todos);
+    const { data: todos = [] } = useTodos();
 
     const count = todos.reduce((acc, prev) => {
         return prev.completed ? acc : acc + 1;

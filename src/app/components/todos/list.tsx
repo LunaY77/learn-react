@@ -1,16 +1,12 @@
-import { useShallow } from "zustand/react/shallow";
+import { useTodos } from "../../hooks/use-todos";
 import useTodoStore from "../../store/todo-store";
-import { FILTERS } from "../footer";
+import { FILTERS } from "../footer/filter-constants";
 import TodoItem from "./item";
 import "./list.less";
 
 const TodoList: React.FC = () => {
-    const { todos, filter } = useTodoStore(
-        useShallow((state) => ({
-            todos: state.todos,
-            filter: state.filter,
-        }))
-    );
+    const { data: todos = [], isLoading } = useTodos();
+    const filter = useTodoStore((state) => state.filter);
 
     const visibleTodos = todos.filter((todo) => {
         switch (filter) {
@@ -22,6 +18,10 @@ const TodoList: React.FC = () => {
                 return true;
         }
     });
+
+    if (isLoading) {
+        return <div className="todo-list-loading">Loading todos...</div>;
+    }
 
     return (
         <ul className="todo-list">
